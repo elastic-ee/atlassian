@@ -37,3 +37,7 @@ The workflow is triggered on:
 - A weekly schedule
 
 The workflow builds and pushes images for both Jira and Confluence to the GitHub Container Registry.
+
+## Thanks
+
+- Thanks to [haxqer/jira](https://github.com/haxqer/jira) for the Atlassian agent.

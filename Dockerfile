@@ -1,0 +1,13 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+
+ENV INSTALL_DIR=${JIRA_INSTALL_DIR:-${CONFLUENCE_INSTALL_DIR}}
+ENV MYSQL_DRIVER_PATH=${INSTALL_DIR}/lib/mysql-connector-java.jar
+
+COPY ./mysql-connector-java.jar ${MYSQL_DRIVER_PATH}
+RUN chown -R ${RUN_USER}:${RUN_GROUP} ${MYSQL_DRIVER_PATH}
+
+ENV AGENT_PATH=/var/atlassian-agent.jar
+ENV JAVA_OPTS="-javaagent:${AGENT_PATH} ${JAVA_OPTS}"
+COPY ./atlassian-agent.jar ${AGENT_PATH}
+RUN chown -R ${RUN_USER}:${RUN_GROUP} ${AGENT_PATH}

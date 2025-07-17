@@ -1,0 +1,44 @@
+stages:
+  - build
+
+default:
+  tags:
+    - shared-runner
+
+build-jira:
+  variables:
+    IMAGE: $CI_REGISTRY_IMAGE/jira:latest
+    BASE_IMAGE: atlassian/jira-software:9-jdk17
+  stage: build
+  image:
+    name: docker:latest
+    entrypoint: [""]
+  script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker build -t $IMAGE --build-arg BASE_IMAGE=$BASE_IMAGE --no-cache .
+    - docker push $IMAGE
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - Dockerfile
+        - atlassian-agent.jar
+        - mysql-connector-java.jar
+
+build-confluence:
+  variables:
+    IMAGE: $CI_REGISTRY_IMAGE/confluence:latest
+    BASE_IMAGE: atlassian/confluence:9.2-jdk21
+  stage: build
+  image:
+    name: docker:latest
+    entrypoint: [""]
+  script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker build -t $IMAGE --build-arg BASE_IMAGE=$BASE_IMAGE --no-cache .
+    - docker push $IMAGE
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        - Dockerfile
+        - atlassian-agent.jar
+        - mysql-connector-java.jar

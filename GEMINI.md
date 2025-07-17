@@ -9,3 +9,5 @@
   - Use `mcp__sequential-thinking__sequentialthinking` for multi-step analysis, debugging, implementation planning, or any task requiring structured problem-solving
   - Break down complex problems into logical thinking steps
   - Use when uncertain about approach or when multiple solutions exist
+- **MUST follow Conventional Commits specification for commit messages**
+  - This ensures commit messages are descriptive and standardized.

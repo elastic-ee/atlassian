@@ -28,7 +28,7 @@ jobs:
         include:
           - name: jira
             base_image: atlassian/jira-software
-            tag: 9-jdk17
+            tag: 10-jdk17
           - name: confluence
             base_image: atlassian/confluence
             tag: 9.2-jdk21

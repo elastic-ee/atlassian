@@ -26,9 +26,11 @@ jobs:
       matrix:
         include:
           - name: jira
-            base_image: atlassian/jira-software:9-jdk17
+            base_image: atlassian/jira-software
+            tag: 9-jdk17
           - name: confluence
-            base_image: atlassian/confluence:9.2-jdk21
+            base_image: atlassian/confluence
+            tag: 9.2-jdk21
 
     steps:
       - name: Checkout repository
@@ -49,7 +51,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.name }}:latest
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.name }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.name }}:${{ matrix.tag }}
           build-args: |
-            BASE_IMAGE=${{ matrix.base_image }}
+            BASE_IMAGE=${{ matrix.base_image }}:${{ matrix.tag }}
           no-cache: true
